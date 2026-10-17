@@ -1,7 +1,36 @@
 <section class="intro home-intro">
-  <p class="eyebrow">Welcome</p>
-  <h1>{{ site.Title }}</h1>
-  {{ with site.Params.description }}<p class="lead">{{ . }}</p>{{ end }}
-  <p><a class="button" href="{{ "posts/" | relURL }}">Read the posts</a></p>
+  <div class="hero-copy">
+    <p class="eyebrow">Practical digital security</p>
+    <h1>{{ site.Title }}<span class="accent-dot">.</span></h1>
+    {{ with site.Params.description }}<p class="lead">{{ . }}</p>{{ end }}
+    <p class="hero-actions"><a class="button" href="{{ "posts/" | relURL }}">Read the posts</a><a class="text-link" href="#latest">See latest <span aria-hidden="true">↓</span></a></p>
+  </div>
+  <aside class="hero-note" aria-label="Site note">
+    <span class="status-dot" aria-hidden="true"></span>
+    <p>Independent notes on building safer systems.</p>
+    <span class="note-line"></span>
+    <p class="note-meta">EST. 2026 / ONLINE</p>
+  </aside>
 </section>
 
+<section class="latest" id="latest" aria-labelledby="latest-heading">
+  <div class="section-heading">
+    <p class="eyebrow">From the journal</p>
+    <h2 id="latest-heading">Latest posts</h2>
+  </div>
+  <div class="post-list post-list-home">
+    {{ range $index, $post := first 3 (where site.RegularPages "Section" "posts") }}
+      <article class="post-card">
+        <p class="post-index">{{ printf "%02d" (add 1 $index) }}</p>
+        <div class="post-card-body">
+          <p class="post-date"><time datetime="{{ $post.Date.Format "2006-01-02" }}">{{ $post.Date.Format "2 January 2006" }}</time></p>
+          <h3><a href="{{ $post.RelPermalink }}">{{ $post.LinkTitle }}</a></h3>
+          {{ with $post.Description }}<p>{{ . }}</p>{{ end }}
+        </div>
+        <a class="card-arrow" href="{{ $post.RelPermalink }}" aria-label="Read {{ $post.LinkTitle }}">↗</a>
+      </article>
+    {{ else }}
+      <p>No published posts exist yet.</p>
+    {{ end }}
+  </div>
+</section>

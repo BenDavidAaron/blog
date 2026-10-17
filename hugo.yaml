@@ -1,10 +1,10 @@
 baseURL: https://larpsec.net/
 languageCode: en-us
-title: Your Blog
+title: LarpSec
 enableRobotsTXT: true
 
 params:
-  description: A simple Hugo blog.
+  description: Observations and guides on securing digital life.
 
 permalinks:
   posts: /posts/:slug/

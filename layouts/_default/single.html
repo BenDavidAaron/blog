@@ -1,9 +1,10 @@
 {{ define "main" }}
   <article class="article">
+    <a class="back-link" href="{{ "posts/" | relURL }}">← All posts</a>
     <p class="post-date"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 January 2006" }}</time></p>
     <h1>{{ .Title }}</h1>
     {{ with .Description }}<p class="lead">{{ . }}</p>{{ end }}
+    <div class="article-meta"><span>{{ .ReadingTime }} min read</span>{{ with .Params.tags }}<span class="tag-list">{{ range . }}<span class="tag">{{ . }}</span>{{ end }}</span>{{ end }}</div>
     <div class="article-content">{{ .Content }}</div>
   </article>
 {{ end }}
-

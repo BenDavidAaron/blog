@@ -1,6 +1,6 @@
 {{ define "main" }}
   <section class="intro">
-    <p class="eyebrow">{{ site.Title }}</p>
+    <p class="eyebrow">The archive</p>
     <h1>{{ .Title }}</h1>
     {{ with .Content }}<div class="lead">{{ . }}</div>{{ end }}
   </section>
@@ -10,9 +10,12 @@
     <div class="post-list">
       {{ range where .Pages "Params.draft" "ne" true }}
         <article class="post-card">
-          <p class="post-date"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 January 2006" }}</time></p>
-          <h3><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h3>
-          {{ with .Description }}<p>{{ . }}</p>{{ end }}
+          <div class="post-card-body">
+            <p class="post-date"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 January 2006" }}</time></p>
+            <h3><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h3>
+            {{ with .Description }}<p>{{ . }}</p>{{ end }}
+          </div>
+          <a class="card-arrow" href="{{ .RelPermalink }}" aria-label="Read {{ .LinkTitle }}">↗</a>
         </article>
       {{ else }}
         <p>No published posts exist yet.</p>
@@ -20,4 +23,3 @@
     </div>
   </section>
 {{ end }}
-
