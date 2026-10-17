@@ -1,4 +1,4 @@
-baseURL: https://example.com/
+baseURL: https://larpsec.net/
 languageCode: en-us
 title: Your Blog
 enableRobotsTXT: true
@@ -13,4 +13,3 @@ markup:
   goldmark:
     renderer:
       unsafe: false
-
