@@ -1,0 +1,16 @@
+baseURL: https://example.com/
+languageCode: en-us
+title: Your Blog
+enableRobotsTXT: true
+
+params:
+  description: A simple Hugo blog.
+
+permalinks:
+  posts: /posts/:slug/
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: false
+

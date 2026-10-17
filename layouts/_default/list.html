@@ -1,0 +1,23 @@
+{{ define "main" }}
+  <section class="intro">
+    <p class="eyebrow">{{ site.Title }}</p>
+    <h1>{{ .Title }}</h1>
+    {{ with .Content }}<div class="lead">{{ . }}</div>{{ end }}
+  </section>
+
+  <section aria-labelledby="posts-heading">
+    <h2 id="posts-heading">Latest posts</h2>
+    <div class="post-list">
+      {{ range where .Pages "Params.draft" "ne" true }}
+        <article class="post-card">
+          <p class="post-date"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 January 2006" }}</time></p>
+          <h3><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h3>
+          {{ with .Description }}<p>{{ . }}</p>{{ end }}
+        </article>
+      {{ else }}
+        <p>No published posts exist yet.</p>
+      {{ end }}
+    </div>
+  </section>
+{{ end }}
+

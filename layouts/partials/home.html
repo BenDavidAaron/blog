@@ -1,0 +1,7 @@
+<section class="intro home-intro">
+  <p class="eyebrow">Welcome</p>
+  <h1>{{ site.Title }}</h1>
+  {{ with site.Params.description }}<p class="lead">{{ . }}</p>{{ end }}
+  <p><a class="button" href="{{ "posts/" | relURL }}">Read the posts</a></p>
+</section>
+
