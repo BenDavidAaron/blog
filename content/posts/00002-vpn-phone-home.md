@@ -22,7 +22,7 @@ If you're already self hosting Immich, Jellyfin, or a similar service, this will
 
 Hypothetically: if you're using Immich to store your photos, you can sync new photos every evening when you get home, connect to your home wifi, and charge your phone.
 
-If you go on vacation for two weeks, your library will get out of sync, and require a big sync when you get home. By exposing your network via a WireGuard tunnel, you can access your Immich instance from any network without exposing machines to the internet.
+If you go on vacation for two weeks, your library will get out of sync, and require a big sync when you get home. By exposing a WireGuard endpoint, you can access your Immich instance from any network without exposing the service directly to the internet.
 
 ## How do I do this?
 
@@ -45,8 +45,8 @@ I reach for [Debian](https://www.debian.org/) for projects like this because it'
 We'll be using [WireGuard](https://www.wireguard.com/#conceptual-overview) for this project. You can read more about it at that link if you're a big ol' nerd, but the practical reasons to use it are:
 
 - WireGuard has easy to use first-party client software on macOS, Windows, iOS, and Android - Easy for your whole household to access.
-- WireGuard has a minimal attack surface - only one port is open, and it will only respond to clients with a known key. Effectively, it is invisible to passive scanners (unlike OpenVPN, or commercial VPNs).
-- WireGuard is redistributed as part of the [PiVPN project](https://github.com/pivpn/pivpn), which simplifies administration
+- WireGuard has a small attack surface. It uses one configured UDP port and ignores handshakes that do not use a valid key. This does not make the server invisible or secure other services on the host.
+- [PiVPN](https://github.com/pivpn/pivpn) installs and manages WireGuard, which simplifies administration.
 
 ##### Server
 
@@ -63,7 +63,7 @@ We'll be using [WireGuard](https://www.wireguard.com/#conceptual-overview) for t
 
 ##### Services
 
-1. Registered domain name, with Dynamic DNS support
+1. Registered domain name and a Dynamic DNS provider
 
 ### Runbook
 
@@ -91,8 +91,9 @@ Obviously, I can't prescribe how to set up your server hardware (I already wrote
 
 We'll cover this in a future article, but it's important to touch on it here.
 
-Since most consumer internet services assign IP addresses to users dynamically, you need a stable name for your clients to connect to.
-Using a dynamic DNS provider ensures that `vpn.larpsec.net` always points to your home router's IP address.
+Since most consumer internet services assign public IP addresses to users dynamically, you need a stable name for your clients to connect to.
+After you configure a Dynamic DNS updater, `vpn.larpsec.net` will point to your current home router IP address.
+If your ISP uses carrier-grade NAT, port forwarding will not work unless your ISP provides a public address or IPv6 service.
 
 #### Configure a static IP address
 
@@ -125,7 +126,7 @@ This will save you a few minutes of admin work every month.
 Using WireGuard is an important choice because the project originally used OpenVPN, and still supports it.
 Nothing against OpenVPN, I just find WireGuard to be easier to use and more performant.
 
-Using your domain name instead of an IP address is important for clients to connect. When your IP address (assigned by your ISP changes),
+Using your domain name instead of an IP address is important for clients to connect. When the public IP address assigned by your ISP changes,
 statically configured client profiles will fall out of date, and your client devices will be unable to connect.
 Since dynamic DNS keeps your IP address up to date, you can be reasonably sure that your domain name will consistently point to your home router.
 
@@ -135,20 +136,21 @@ Now log back into your router, we have one last change to make:
 
 We're going to add a Port Forwarding Rule for traffic on WireGuard's port.
 
-By default, most home internet routers will ignore all internet traffic coming in.
-They use NAT (Network Address Translation) to allow devices inside your home network to reach out and request sites like facebook.com, google.com, or larpsec.net,
-from behind your router's IP Address.
+By default, most home routers block unsolicited incoming internet traffic with a firewall.
+They use NAT (Network Address Translation) to allow devices inside your home network to reach sites like facebook.com, google.com, or larpsec.net,
+from behind your router's public IP address.
 
 In our case we _want_ to allow incoming WireGuard requests,
 and we want your router to forward them to the WireGuard peer on the server we just configured.
 
-Every router is different, but the configuration will ask for three parameters:
+Every router is different, but the configuration will ask for four values:
 
-- a source port number, this should be the WireGuard port you configured when setting up PiVPN above (default is 51820)
+- a protocol, set this to UDP
+- an external port number, this should be the WireGuard port you configured when setting up PiVPN above (default is 51820)
 - a destination IP address, this should be the static or reserved IP address you set for your server
 - a destination port number, this should be the same WireGuard port as above
 
-Create one port forwarding rule for the three of these and then you should be all set.
+Create one port forwarding rule with these four values.
 
 #### Install WireGuard on your client device
 
@@ -164,11 +166,12 @@ This client profile will contain:
 - A private key for your device
 - The server's public key
 - The endpoint (domain name and port number) of your WireGuard peer
-- The address range that WireGuard will tunnel connections to
-  - you can restrict this to `192.168.0.0/16`, `172.16.0.0/12`, and `10.0.0.0/8` to not tunnel public internet traffic through your VPN
-  - the pivpn defaults are probably okay
+- The address ranges that WireGuard will tunnel connections to
+  - for split tunneling, use your actual home LAN CIDR and WireGuard network CIDR
+  - check the generated values before you use the profile
 
-This profile will be saved on the device, and it will need to be copied onto your client devices to use.
+This profile will be saved on the server, and it will need to be copied onto your client devices.
+Protect the profile because it contains the client's private key.
 
 Your VPN peer should be fully usable at this point.
 
