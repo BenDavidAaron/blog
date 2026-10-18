@@ -3,6 +3,7 @@
 <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}</title>
 {{ with site.Params.description }}<meta name="description" content="{{ . }}">{{ end }}
 <meta name="theme-color" content="#0b1220">
+<link rel="icon" href="{{ "logo.svg" | relURL }}" type="image/svg+xml">
 <link rel="canonical" href="{{ .Permalink }}">
 <meta property="og:title" content="{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}">
 <meta property="og:description" content="{{ site.Params.description }}">
