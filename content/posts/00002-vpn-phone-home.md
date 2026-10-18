@@ -1,7 +1,7 @@
 ---
 title: "VPN Phone Home"
-date: 2026-10-18
-draft: true
+date: 2026-10-17
+draft: false
 description: "How to get started with a WireGuard peer"
 tags: ["vpn", "selfhosting", "wireguard"]
 categories: ["guides"]
