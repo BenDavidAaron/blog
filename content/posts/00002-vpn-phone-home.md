@@ -67,7 +67,7 @@ We'll be using [WireGuard](https://www.wireguard.com/#conceptual-overview) for t
 
 ### Runbook
 
-1. [Set up your server hardware](#setup-your-server-hardware)
+1. [Set up your server hardware](#set-up-your-server-hardware)
 1. [Configure Dynamic DNS](#configure-dynamic-dns)
 1. [Configure a static IP address](#configure-a-static-ip-address)
 1. [Run the PiVPN installer](#run-the-pivpn-installer)
