@@ -64,7 +64,7 @@ h3 a:hover { color: var(--accent); }
 .article-meta { display: flex; align-items: center; gap: 1rem; margin-top: 1.5rem; color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: .75rem; }
 .tag-list { display: flex; flex-wrap: wrap; gap: .4rem; }
 .tag { padding: .25rem .5rem; border: 1px solid var(--line); color: var(--accent); }
-.article-content { margin-top: 4rem; font-family: Georgia, "Times New Roman", serif; font-size: 1.15rem; }
+.article-content { margin-top: 4rem; font-family: "Source Code Pro", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 1.05rem; }
 .article-content h2, .article-content h3 { margin-top: 3rem; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
 .article-content p, .article-content ul, .article-content ol, .article-content blockquote { max-width: 42rem; }
 .article-content a { text-decoration-thickness: .08em; text-underline-offset: .15em; }
