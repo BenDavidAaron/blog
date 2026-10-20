@@ -89,7 +89,7 @@ Obviously, I can't prescribe how to set up your server hardware (I already wrote
 
 #### Configure Dynamic DNS
 
-We'll cover this in a future article, but it's important to touch on it here.
+We'll cover this in the [Dynamic DNS article](/posts/dynamic-dns/), but it's important to touch on it here.
 
 Since most consumer internet services assign public IP addresses to users dynamically, you need a stable name for your clients to connect to.
 After you configure a Dynamic DNS updater, `vpn.larpsec.net` will point to your current home router IP address.
